@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { CommonSC, FlexSC } from "../../../styles/components";
 
 const ChatCard = ({ circleColor, title, content }) => {
-  console.log(content);
   return (
     <ChatCardContainer>
       <FlexSC.FlexRow justify="flex-start" align="flex-start" gap="20px">
@@ -18,8 +17,9 @@ const ChatCard = ({ circleColor, title, content }) => {
             <p>{content}</p>
           ) : (
             <FlexSC.FlexColumn align="flex-start">
-              {content?.map((ele) => (
+              {content?.map((ele, idx) => (
                 <FlexSC.FlexRow
+                  key={`content-${idx}`}
                   align="flex-start"
                   justify="flex-start"
                   gap="10px"
@@ -54,7 +54,7 @@ const ChatCardContainer = styled.section`
 
   p {
     font-size: 16px;
-    font-weight: 200;
+    font-weight: 400;
     line-height: 1.4;
     word-break: keep-all;
   }

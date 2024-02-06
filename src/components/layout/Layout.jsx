@@ -1,35 +1,23 @@
 import styled from "styled-components";
 import Header from "./Header";
-import Footer from "./Footer";
 
-// header = 70 + 20
-// footer = 122 + 20 + 20
-// total = 252
-
-const Layout = ({ children,onSubmit }) => {
+const Layout = ({ children, onSubmit }) => {
   return (
     <LayoutContainer>
       <Header />
-      <BodyInner>
-        <ContentContainer>{children}</ContentContainer>
-      </BodyInner>
-      <Footer onSubmit={onSubmit}/>
+      <BodyInner>{children}</BodyInner>
     </LayoutContainer>
   );
 };
 
-const LayoutContainer = styled.header`
+const LayoutContainer = styled.div`
   width: 100%;
+  padding-top: 20px; // 헤더의 블러 부분 제외하고 위로 보이지 않게 하기위해 설정
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-`;
-
-const ContentContainer = styled.section`
-  max-height: calc(100vh - 252px);
-  min-height: calc(100vh - 252px);
-  overflow-y: auto;
+  background-color: transparent;
 `;
 
 export const BodyInner = styled.div`

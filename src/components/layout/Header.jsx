@@ -6,9 +6,8 @@ const Header = () => {
   return (
     <HeaderContainer>
       <HeaderInner>
-        <FlexSC.FlexRow justify="flex-start" gap="20px">
-          <CommonSC.Circle color="#fff" />
-          <h2>kanghyewon</h2>
+        <FlexSC.FlexRow gap="20px">
+          <h2>me-and-my-gpt </h2>
         </FlexSC.FlexRow>
       </HeaderInner>
     </HeaderContainer>
@@ -16,6 +15,8 @@ const Header = () => {
 };
 
 const HeaderContainer = styled.header`
+  position: fixed;
+  top: 0;
   width: 100%;
   height: 70px;
   margin-top: 20px;
@@ -26,7 +27,6 @@ const HeaderContainer = styled.header`
 `;
 
 export const HeaderInner = styled.section`
-  position: fixed;
   width: 100%;
   height: 70px;
   max-width: 768px;
@@ -34,8 +34,8 @@ export const HeaderInner = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(26px);
+  background-color: rgb(78 78 78 / 23%);
+  backdrop-filter: blur(10px);
   border-radius: 16px;
 
   h2 {
