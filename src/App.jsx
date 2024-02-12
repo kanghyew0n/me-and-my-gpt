@@ -25,9 +25,9 @@ function App() {
   const handleClickGptCall = async (text) => {
     try {
       setIsLoading(true);
-      return setData(GPT_PARAM); // 테스트용
+      // return setData(GPT_PARAM); // 테스트용 
       const message = await callGpt({ prompt: `${text}` });
-      setData(message);
+      setData(JSON.parse(message)); // string 타입으로 오기때문에 json 형식으로 변환 필요
     } catch (err) {
       console.log(err);
     } finally {
