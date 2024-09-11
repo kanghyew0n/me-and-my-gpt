@@ -1,9 +1,9 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { callGpt } from "./api/gpt";
 import Layout from "./components/layout/Layout";
 import Answer from "./components/chat/Answer";
 import CommonInput from "./components/chat/Input";
-
 
 // const TEST_MESSAGE = {
 //   variable_names: [
