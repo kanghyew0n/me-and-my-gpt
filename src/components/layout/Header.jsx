@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { CommonSC } from "../../../styles/components";
 import { FlexSC } from "../../../styles/components";
 
 const Header = () => {
