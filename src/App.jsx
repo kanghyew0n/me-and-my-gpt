@@ -1,23 +1,42 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { callGpt } from "./api/gpt";
 import Layout from "./components/layout/Layout";
 import Answer from "./components/chat/Answer";
-import CommonTextArea from "./components/textField/TextArea";
+import CommonInput from "./components/chat/Input";
+
+
+// const TEST_MESSAGE = {
+//   variable_names: [
+//     "emotion",
+//     "feelings",
+//     "mood",
+//     "stateOfMind",
+//     "sentiment",
+//     "emotionalState",
+//     "mentalState",
+//     "innerFeeling",
+//     "spirit",
+//     "soul",
+//   ],
+// };
+
 
 function App() {
-  const [data, setData] = useState("");
+  const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleClickGptCall = async (text) => {
+  const handleClickGptCall = async (e, text) => {
+    e.preventDefault();
+
     try {
       setIsLoading(true);
-
       const message = await callGpt({ prompt: `${text}` });
 
+      
       if (message) {
         try {
-          setData(JSON.parse(message)); // 문자열을 JSON으로 변환
+          // setData(message); // test
+          setData(JSON.parse(message));
         } catch (e) {
           console.error("JSON 파싱 오류:", e);
         }
@@ -30,9 +49,21 @@ function App() {
   };
 
   return (
-    <Layout onSubmit={handleClickGptCall}>
-      {isLoading ? <div>loading...</div> : ""}
-      <ContentContainer>
+    <Layout>
+      <TitleWrapper hidden={Boolean(data)}>
+        <h1>변수고민 이제 그만!!!</h1>
+        <h3>
+          고민되는 변수명, 함수명, 컴포넌트명 모두 물어봐주세요! 원하는
+          요구사항을 자세하게 알려주세요!
+        </h3>
+      </TitleWrapper>
+      <CommonInput
+        onSubmit={handleClickGptCall}
+        data={data}
+        setData={setData}
+      />
+      <ContentContainer view={Boolean(data)}>
+        {/* {isLoading ? <div>loading...</div> : ""} */}
         {!isLoading && data && (
           <AnswerWrapper>
             {data.variable_names.map((item, idx) => {
@@ -41,16 +72,44 @@ function App() {
           </AnswerWrapper>
         )}
       </ContentContainer>
-      <CommonTextArea onSubmit={handleClickGptCall} />
     </Layout>
   );
 }
 
-const ContentContainer = styled.section`
-  max-height: calc(100vh - 182px);
-  min-height: calc(100vh - 182px);
-  padding: 120px 0 50px 0;
-  overflow-y: auto;
+const TitleWrapper = styled.section`
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -130px);
+
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  opacity: ${({ hidden }) => (hidden ? 0 : 1)};
+  transition: opacity 0.2s ease-in-out;
+
+  h1 {
+    font-size: 54px;
+    font-weight: 700;
+    text-align: center;
+    color: #000;
+  }
+
+  h3 {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: 400;
+    text-align: center;
+    color: #000;
+  }
+`;
+
+const ContentContainer = styled.div`
+  height: ${({ view }) => (view ? '400px' : 0)};
+  opacity: ${({ view }) => (view ? 1 : 0)};
+  margin-top: 50px;
+  transition: all 0.3s ease-in-out;
 `;
 
 const AnswerWrapper = styled.div`
