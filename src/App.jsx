@@ -5,22 +5,6 @@ import Layout from "./components/layout/Layout";
 import Answer from "./components/chat/Answer";
 import CommonInput from "./components/chat/Input";
 
-// const TEST_MESSAGE = {
-//   variable_names: [
-//     "emotion",
-//     "feelings",
-//     "mood",
-//     "stateOfMind",
-//     "sentiment",
-//     "emotionalState",
-//     "mentalState",
-//     "innerFeeling",
-//     "spirit",
-//     "soul",
-//   ],
-// };
-
-
 function App() {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -28,11 +12,12 @@ function App() {
   const handleClickGptCall = async (e, text) => {
     e.preventDefault();
 
+    if (text === "") return alert("입력해보세요!");
+
     try {
       setIsLoading(true);
       const message = await callGpt({ prompt: `${text}` });
 
-      
       if (message) {
         try {
           // setData(message); // test
@@ -64,12 +49,14 @@ function App() {
       />
       <ContentContainer view={Boolean(data)}>
         {/* {isLoading ? <div>loading...</div> : ""} */}
-        {!isLoading && data && (
+        {data && data?.variable_names ? (
           <AnswerWrapper>
             {data.variable_names.map((item, idx) => {
               return <Answer key={`variable-name-${idx}`} name={item} />;
             })}
           </AnswerWrapper>
+        ) : (
+          "다시 시도해주세요"
         )}
       </ContentContainer>
     </Layout>
@@ -106,7 +93,7 @@ const TitleWrapper = styled.section`
 `;
 
 const ContentContainer = styled.div`
-  height: ${({ view }) => (view ? '400px' : 0)};
+  height: ${({ view }) => (view ? "400px" : 0)};
   opacity: ${({ view }) => (view ? 1 : 0)};
   margin-top: 50px;
   transition: all 0.3s ease-in-out;
