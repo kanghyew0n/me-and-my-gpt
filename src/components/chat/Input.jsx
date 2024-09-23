@@ -11,7 +11,7 @@ const CommonInput = ({ data, onSubmit, setData }) => {
   };
 
   const handleReset = () => {
-    setText();
+    setText('');
     setData("");
   }
 
